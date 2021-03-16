@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<div th:fragment="header" class="d-flex justify-content-between bg-dark text-white align-items-center">
+    <div class="ms-4"><h5>[[${user.getLogin()}]] with roles: [[${roleService.getStringWithRoles(user)}]]</h5></div>
+    <div class="me-3">
+        <form th:action="@{/logout}">
+            <button type="submit" class="btn btn-link nav-item nav-link text-secondary">Logout</button>
+        </form>
+    </div>
+</div>
