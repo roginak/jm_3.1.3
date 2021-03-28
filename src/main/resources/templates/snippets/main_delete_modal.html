@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+
+<div th:fragment="deleteModal" class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Delete user</h5>
+            <button type="button" class="btn-close  btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="deleteUserForm" onsubmit="updateUser(this, 'DELETE'); return false">
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-sm-6 text-center">
+                        <label for="id" class="col-form-label">ID</label>
+                        <input type="text" class="form-control" readonly required id="id" name="id">
+
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" readonly id="name" name="name">
+
+                        <label for="surname" class="col-form-label">Surname:</label>
+                        <input type="text" class="form-control" readonly id="surname" name="surname">
+
+                        <label for="position" class="col-form-label">Position:</label>
+                        <input type="text" class="form-control" readonly id="position" name="position">
+
+                        <label for="salary" class="col-form-label">Salary:</label>
+                        <input type="text" class="form-control" readonly required  id="salary" name="salary">
+
+                        <label for="contact" class="col-form-label">Contact:</label>
+                        <input type="text" class="form-control" readonly id="contact" name="contact">
+
+                        <label for="login" class="col-form-label">Login:</label>
+                        <input type="text" class="form-control" readonly required id="login" name="login">
+
+                        <label for="delete_roles" class="col-form-label">Roles:</label>
+                        <select  class="form-control" readonly required name="listRoles" id="delete_roles" multiple>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</html>

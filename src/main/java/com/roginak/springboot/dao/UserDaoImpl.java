@@ -1,7 +1,6 @@
 package com.roginak.springboot.dao;
 
 
-import com.roginak.springboot.entities.Role;
 import com.roginak.springboot.entities.User;
 import org.springframework.stereotype.Repository;
 

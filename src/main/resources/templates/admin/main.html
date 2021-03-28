@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/webjars/bootstrap/5.0.0-beta2/css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" th:href="@{../css/main.css}" />
+    <script type="text/javascript" src="/webjars/bootstrap/5.0.0-beta2/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{../js/main.js}" src="../static/js/main.js"></script>
+    <title>Admin panel</title>
+</head>
+<body>
+<header th:insert="snippets/main_header :: header"></header>
+
+<div th:insert="snippets/main_edit_modal :: editModal" class="modal fade" th:id="editModal" tabindex="-1" aria-labelledby="edit" aria-hidden="true"></div>
+<div th:insert="snippets/main_delete_modal :: deleteModal" class="modal fade" th:id="deleteModal" tabindex="-1" aria-labelledby="delete" aria-hidden="true"></div>
+
+
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-md-2 pl-0 pr-0 pt-3">
+            <div class="nav flex-column nav-pills" role="tablist">
+                <a class="nav-link active" data-bs-toggle="pill" id="admin-tab" data-bs-target="#Admin-panel" type="button" role="tab" aria-controls="Admin-panel" aria-selected="true">Admin</a>
+                <a class="nav-link" data-bs-toggle="pill" id="user-tab" data-bs-target="#User-panel" type="button" role="tab" aria-controls="User-panel" aria-selected="false">User</a>
+            </div>
+        </div>
+        <div class="tab-content col-md-10 bg-light pt-3 ps-5 pe-5" id="mainTabContent">
+            <div class="tab-pane  fade show active"  id="Admin-panel"  role="tabpanel" aria-labelledby="admin-tab">
+                <h1>Admin panel</h1>
+                <div class="list-group" id="list-tab" role="tablist">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="list-allUsers" data-bs-toggle="list" role="tab" aria-controls="allUsers" href="#allUsers">User table</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="list-newUser" data-bs-toggle="list" role="tab" aria-controls="newUser" href="#newUser">New User</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="all-nav-tabContent">
+                    <div id="allUsers" role="tabpanel" aria-labelledby="list-allUsers" class="tab-pane fade show active card">
+                        <h4 class="card-header mb-3" >All users</h4>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="all">
+                                <div class="mx-4">
+                                    <table class="table table-striped table-borderless align-middle">
+                                        <thead class="table-bordered">
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Surname</th>
+                                            <th>Position</th>
+                                            <th>Salary</th>
+                                            <th>Contact</th>
+                                            <th>Login</th>
+                                            <th>Roles</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="table-content"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="newUser" role="tabpanel" aria-labelledby="list-newUser" class="tab-pane fade card">
+                        <h4 class="card-header">Add new user</h4>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="new">
+                                <div class="row justify-content-center">
+                                    <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-8 text-center text-center">
+                                        <form id="create_form" th:method="post" onsubmit="updateUser(this, 'POST'); return false">
+                                            <label class="form-label mb-0 fw-bold mt-3">Login: </label>
+                                            <input class="form-control form-control-sm" required type="text" name="login" id="new_login"/>
+
+                                            <label class="form-label mb-0 fw-bold mt-3">Password: </label>
+                                            <input class="form-control form-control-sm" required type="password" name="password" id="new_password"/>
+
+                                            <label class="form-label mb-0 fw-bold mt-3">Name: </label>
+                                            <input class="form-control form-control-sm optional-field-in-add" type="text" name="name" id="new_name"/>
+
+                                            <label class="form-label mb-0 fw-bold mt-3">Surname: </label>
+                                            <input class="form-control form-control-sm optional-field-in-add" type="text" name="surname" id="new_surname"/>
+
+                                            <label class="form-label mb-0 fw-bold mt-3">Position: </label>
+                                            <input class="form-control form-control-sm optional-field-in-add" type="text" name="position" id="new_position"/>
+
+                                            <label class="form-label mb-0 fw-bold mt-3">Salary: </label>
+                                            <input class="form-control form-control-sm" required type="text" name="salary" id="new_salary"/>
+
+                                            <label class="form-label mb-0 fw-bold mt-3">Contact: </label>
+                                            <input class="form-control form-control-sm optional-field-in-add" type="text" name="contact" id="new_contact"/>
+
+                                            <label class="form-label mb-0 fw-bold mt-3">Roles: </label>
+                                            <select class="form-control form-control-sm" required name="roles"  id="new_roles"multiple>
+                                            </select>
+                                            <button type="submit" class="btn btn-success btn-lg mt-3 mb-5">Add new user</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="User-panel" role="tabpanel" aria-labelledby="user-tab">
+                <h1>User information-page</h1>
+                <div class="tab-content" id="nav-tabContent">
+                    <div id="UserTab" role="tabpanel" aria-labelledby="list-User" class="tab-pane fade show active card">
+                        <h4 class="card-header mb-3" >About users</h4>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="user">
+                                <div class="mx-4">
+                                    <table class="table table-striped table-borderless align-middle">
+                                        <thead class="table-bordered">
+                                        <tr>
+
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Surname</th>
+                                            <th>Position</th>
+                                            <th>Salary</th>
+                                            <th>Contact</th>
+                                            <th>Login</th>
+                                            <th>Roles</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="user-table-content"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
