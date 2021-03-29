@@ -1,5 +1,5 @@
-body {
-    height: 1000px;
+#mainTabContent {
+    min-height: 1000px;
 }
 
 .optional-field-in-add {
