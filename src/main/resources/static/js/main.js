@@ -197,13 +197,18 @@ function updateUser(form, action) {
             body: JSON.stringify(user)}).then(function (response) {
             response.text().then(function(text) {
                 if(response.status === 200) {
-                    if(user_id === current_user_id && user.login !== current_user_login) {
-                        window.location.replace('/logout');
+                    if(user_id === current_user_id ) {
+                        if(user.login !== current_user_login) {
+                            window.location.replace('/logout');
+                        } else {
+                            $('#current_user_string').text('');
+                            $('#user-table-content').remove('tr');
+                            renderHeaderWithUserTable();
+                        }
+
                     }
                     $('#table-content').remove('tr');
                     renderAllUsersTable();
-                    $('#user-table-content').remove('tr');
-                    renderUserTable();
                     $('#editModal').modal('hide');
                 } else {
                     alert(response.status + " " + response.statusText);
